@@ -1,0 +1,1 @@
+# not-collection-with-airdrop
