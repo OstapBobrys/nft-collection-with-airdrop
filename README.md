@@ -26,6 +26,7 @@ Before starting the airdrop, you need to add csv file to helper folder:
 The script automatically sorts all the addresses and returns the ones we need (every 3 identical addresses are changed to 1)
     helper/airdrop-calc.ts
 
+```
 Example:
     Snapshot:
     [
@@ -73,7 +74,7 @@ Example:
         '0x5B1D72Dce914FC4fB24d2BfBa4DdBdd05625152D',
         '0x5B1D72Dce914FC4fB24d2BfBa4DdBdd05625152D'
     ];
-
+```
     Result:
     [
         '0x06a800401195ff844485782ddfbc6faa3f697615',
