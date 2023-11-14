@@ -1,7 +1,6 @@
 import { task } from 'hardhat/config';
 import { Contract } from 'ethers';
-import { airdropCalculation } from '../helper/airdrop-calc';
-import { holderAddresses } from '../helper/holders';
+import { holders } from '../helper/airdrop-calc';
 
 const CONTRACT_NAME = 'Collection';
 
@@ -18,8 +17,6 @@ task('airdrop', 'Airdrop').setAction(async (taskArgs, hre) => {
 
   const contract = new Contract(contractArtifacts.address, contractArtifacts.abi, signer);
 
-  const holders = airdropCalculation(holderAddresses);
-
   const tx = await contract.airdrop(holders);
 
   console.log('------------------------------------------');
@@ -29,5 +26,7 @@ task('airdrop', 'Airdrop').setAction(async (taskArgs, hre) => {
   }
 
   console.log('------------------------------------------');
+
+  console.log('NFT send by Airdrop:', holders.length);
   console.log('Tx hash:', tx.hash);
 });

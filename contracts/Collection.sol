@@ -11,21 +11,26 @@ contract Collection is ERC721, Ownable2Step { // rename with your Collection nam
 
     Counters.Counter private _tokenIdCounter;
 
-    uint256 public constant TOTAL_SUPPLY = 30; // can be change before deploy
+    uint256 public constant TOTAL_SUPPLY = 400; // can be change before deploy
     uint256 public constant PRICE = 1074 * 10 ** 18; // can be change before deploy
 
     string public baseURI;
     string public baseExtension = '.json';
 
+    bool isActive;
+
     error MintIsOver();
     error InvalidPrice();
     error NotSuccessWithdraw();
+    error MintNotStartedYet();
 
     constructor() ERC721('Name', 'SYMBOL' /* SHOULD BE CHANGE */) {
         setBaseURI( 'ipfs://QmXFdYLQWH7pDdS61k9hSSPYg6BtAf5UGRZhzTTk5JLe33/'); // SHOUD BE CHANGE
     }
 
     function airdrop(address[] calldata _holders) external onlyOwner {
+        _tokenIdCounter.increment();
+
         uint256 tokenId = _tokenIdCounter.current();
         uint256 length = _holders.length;
 
@@ -34,12 +39,15 @@ contract Collection is ERC721, Ownable2Step { // rename with your Collection nam
 
             _safeMint(_holders[i], tokenId + i);
         }
+
+        isActive = true;
     }
 
     function mint() external payable {
         uint256 tokenId = _tokenIdCounter.current();
 
-        if (tokenId >= TOTAL_SUPPLY) revert MintIsOver();
+        if(!isActive) revert MintNotStartedYet();
+        if (tokenId > TOTAL_SUPPLY) revert MintIsOver();
         if (msg.value != PRICE) revert InvalidPrice();
 
         _safeMint(msg.sender, tokenId);
@@ -54,6 +62,10 @@ contract Collection is ERC721, Ownable2Step { // rename with your Collection nam
 
     function balance() external view returns (uint256) {
         return address(this).balance;
+    }
+
+    function currentTokenId() external view returns (uint256) {
+        return _tokenIdCounter.current();
     }
 
     function setBaseURI(string memory _newBaseURI) public onlyOwner {

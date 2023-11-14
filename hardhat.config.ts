@@ -9,7 +9,6 @@ import { HardhatNetworkForkingUserConfig } from 'hardhat/src/types/config';
 
 import './tasks/';
 import './helper/airdrop-calc';
-import './helper/holders';
 
 const { PRIVATE_KEY, FORKING_BLOCK, FORKING_ENV } = process.env;
 

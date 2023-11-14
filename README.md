@@ -19,8 +19,9 @@ For classic hardhat deploy use command
 
 ### Airdrop
 
-Before starting the airdrop, you need to add all address holders to the array in:
-    helper/holders.ts
+Before starting the airdrop, you need to add csv file to helper folder:
+    1. Rename file to snapshot.csv
+    2. Refactoring(user_id, delete not EVM addresses)
 
 The script automatically sorts all the addresses and returns the ones we need (every 3 identical addresses are changed to 1)
     helper/airdrop-calc.ts

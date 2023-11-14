@@ -1,4 +1,21 @@
-import { holderAddresses } from "./holders";
+import fs from 'fs';
+import csvParser from 'csv-parser';
+
+interface AddressData {
+  user_id: string;
+}
+
+export let holders: string[] = [];
+const holderAddresses: string[] = [];
+
+fs.createReadStream('helper/snapshot.csv')
+  .pipe(csvParser())
+  .on('data', (row: AddressData) => {
+    holderAddresses.push(row.user_id);
+  })
+  .on('end', () => {
+    holders = airdropCalculation(holderAddresses);
+  });
 
 export function airdropCalculation(arr: string[]): string[] {
   const addressCounts: { [key: string]: number } = {};
@@ -24,7 +41,3 @@ export function airdropCalculation(arr: string[]): string[] {
 
   return result;
 }
-
-const uniqueDividedAddresses = airdropCalculation(holderAddresses);
-console.log(uniqueDividedAddresses);
-

@@ -6,9 +6,12 @@ coverage.json
 typechain
 typechain-types
 yarn-error.log
+package-lock.json
+helper/snapshot.csv
 
 #Hardhat files
 cache
 artifacts
 deployments/cyberpunk
 deployments/localhost
+deployments/shimmer_testnet
