@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity 0.8.22;
+pragma solidity 0.8.23;
 
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import '@openzeppelin/contracts/access/Ownable2Step.sol';
-import '@openzeppelin/contracts/utils/Counters.sol';
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable2Step.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract Collection is ERC721, Ownable2Step { // rename with your Collection name 
     using Counters for Counters.Counter;
@@ -11,21 +11,21 @@ contract Collection is ERC721, Ownable2Step { // rename with your Collection nam
 
     Counters.Counter private _tokenIdCounter;
 
-    uint256 public constant TOTAL_SUPPLY = 400; // can be change before deploy
+    uint256 public constant TOTAL_SUPPLY = 1074; // can be change before deploy
     uint256 public constant PRICE = 1074 * 10 ** 18; // can be change before deploy
 
     string public baseURI;
-    string public baseExtension = '.json';
+    string public baseExtension = ".json";
 
-    bool isActive;
+    bool public isActive;
 
     error MintIsOver();
     error InvalidPrice();
     error NotSuccessWithdraw();
     error MintNotStartedYet();
 
-    constructor() ERC721('Name', 'SYMBOL' /* SHOULD BE CHANGE */) {
-        setBaseURI( 'ipfs://QmXFdYLQWH7pDdS61k9hSSPYg6BtAf5UGRZhzTTk5JLe33/'); // SHOUD BE CHANGE
+    constructor() ERC721("Name", "SYMBOL" /* SHOULD BE CHANGE */) {
+        setBaseURI( "ipfs://QmXFdYLQWH7pDdS61k9hSSPYg6BtAf5UGRZhzTTk5JLe33/"); // SHOUD BE CHANGE
     }
 
     function airdrop(address[] calldata _holders) external onlyOwner {
@@ -56,7 +56,7 @@ contract Collection is ERC721, Ownable2Step { // rename with your Collection nam
     }
 
     function withdraw() external onlyOwner {
-        (bool success, ) = payable(msg.sender).call{value: address(this).balance}('');
+        (bool success, ) = payable(msg.sender).call{value: address(this).balance}("");
         if(!success) revert NotSuccessWithdraw();
     }
 
