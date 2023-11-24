@@ -76,6 +76,14 @@ contract Collection is ERC721, Ownable2Step { // rename with your Collection nam
         baseExtension = _newBaseExtension;
     }
 
+    function tokenURI(uint256 _tokenId) public view virtual override returns (string memory) {
+        string memory currentBaseURI = _baseURI();
+
+        return bytes(currentBaseURI).length > 0
+            ? string(abi.encodePacked(currentBaseURI, _tokenId.toString(), baseExtension))
+            : "";
+    }
+
     function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
     }

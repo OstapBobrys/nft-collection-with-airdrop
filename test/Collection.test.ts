@@ -34,6 +34,11 @@ describe('Wasteland Sirens test', function () {
       expect(await collection.ownerOf(295)).to.eq(user.address);
       expect(await collection.balance()).to.eq(price);
 
+      const baseURI = await collection.baseURI();
+      const baseExtension = await collection.baseExtension();
+      expect(await collection.tokenURI(295)).to.eq(`${baseURI}295${baseExtension}`)
+      expect(await collection.tokenURI(296)).to.eq(`${baseURI}296${baseExtension}`)
+
       await collection.connect(user).mint({ value: price });
 
       expect(await collection.balanceOf(user.address)).to.eq(2);
